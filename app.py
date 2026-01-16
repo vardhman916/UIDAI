@@ -21,9 +21,9 @@ LOGO_PATH = ASSETS_DIR / "aadhaar_logo.png"  # optional
 
 
 # -------------------- Paths (edit if your CSVs are elsewhere) --------------------
-BIOMETRIC_PATH = "final_aadhar_biometric_analysis.csv"
-DEMOGRAPHIC_PATH = "final_aadhar_demographic_analysis.csv"
-ENROLMENT_PATH  = "final_aadhar_enrolment_analysis.csv"
+BIOMETRIC_PATH = "data/final_aadhar_biometric_analysis.csv"
+DEMOGRAPHIC_PATH = "data/final_aadhar_demographic_analysis.csv"
+ENROLMENT_PATH  = "data/final_aadhar_enrolment_analysis.csv"
 
 # -------------------- Cache data load --------------------
 @st.cache_data(show_spinner=True)

@@ -3,7 +3,9 @@ from __future__ import annotations
 import pandas as pd
 import numpy as np
 from typing import Dict, Tuple
+from pathlib import Path
 # ---------- Date parsing (robust to dd-mm-yyyy and yyyy-mm-dd) ----------
+BASE_DIR = Path(__file__).resolve().parent
 def parse_mixed_date(s: pd.Series) -> pd.Series:
     """
     Handles mixed date formats across your files:
@@ -53,10 +55,13 @@ def load_and_aggregate(
     - district_daily: aggregated by [date, state, district_final]
     Also returns metadata in a dict if needed later.
     """
+    biometric_path = BASE_DIR / biometric_path
+    demographic_path = BASE_DIR / demographic_path
+    enrolment_path = BASE_DIR / enrolment_path
 
     # ----------------- Biometric -----------------
     bio_usecols = ["date", "state", "district_final", "bio_age_5_17", "bio_age_17_"]
-    bio = pd.read_csv(r'D:\Aadhar_dashboard\data\final_aadhar_biometric_analysis.csv', usecols=bio_usecols)
+    bio = pd.read_csv(biometric_path, usecols=bio_usecols)
 
     bio["date"] = parse_mixed_date(bio["date"])
     bio = bio.dropna(subset=["date", "state", "district_final"])
@@ -77,7 +82,7 @@ def load_and_aggregate(
 
     # ----------------- Demographic -----------------
     demo_usecols = ["date", "state", "district_final", "demo_age_5_17", "demo_age_17_"]
-    demo = pd.read_csv(r'D:\Aadhar_dashboard\data\final_aadhar_demographic_analysis.csv', usecols=demo_usecols)
+    demo = pd.read_csv(demographic_path, usecols=demo_usecols)
 
     demo["date"] = parse_mixed_date(demo["date"])
     demo = demo.dropna(subset=["date", "state", "district_final"])
@@ -98,7 +103,7 @@ def load_and_aggregate(
 
     # ----------------- Enrolment -----------------
     enr_usecols = ["date", "state", "district_final", "age_0_5", "age_5_17", "age_18_greater"]
-    enr = pd.read_csv(r'D:\Aadhar_dashboard\data\final_aadhar_enrolment_analysis.csv', usecols=enr_usecols)
+    enr = pd.read_csv(enrolment_path, usecols=enr_usecols)
 
     enr["date"] = parse_mixed_date(enr["date"])
     enr = enr.dropna(subset=["date", "state", "district_final"])
